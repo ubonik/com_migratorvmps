@@ -1,0 +1,29 @@
+# modules/your-module/config/routes.yml 
+main:  
+  path: /migratorvmps/main  
+  methods: [GET]  
+  defaults:  
+    _controller: 'Migratorvmps\Controller\MainController::mainAction'  
+    _legacy_controller: 'MigratorvmpsMainController'  
+    _legacy_link: 'MigratorvmpsMainController'
+insert:  
+  path: /migratorvmps/insert  
+  methods: [GET]  
+  defaults:  
+    _controller: 'Migratorvmps\Controller\MainController::insertAction'  
+    _legacy_controller: 'MigratorvmpsMainController'  
+    _legacy_link: 'MigratorvmpsMainController'
+reset:  
+  path: /migratorvmps/reset  
+  methods: [GET]  
+  defaults:  
+    _controller: 'Migratorvmps\Controller\MainController::resetAction'  
+    _legacy_controller: 'MigratorvmpsMainController'  
+    _legacy_link: 'MigratorvmpsMainController'       
+update_image:  
+  path: /migratorvmps/update  
+  methods: [GET]  
+  defaults:  
+    _controller: 'Migratorvmps\Controller\UpdateImageController::updateImageAction'  
+    _legacy_controller: 'MigratorvmpsUpdateImageController'  
+    _legacy_link: 'MigratorvmpsUpdateImageController'      

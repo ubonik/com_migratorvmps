@@ -1,0 +1,2 @@
+{$mypage}
+использует AdminPrestatestController расширяющий AdminController

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="component" method="upgrade">
+    <name>migratorvmps</name>
+    <authorUrl>https://spod96.ru</authorUrl>
+    <authorEmail>liders05@mail.ru</authorEmail>
+    <version>1.0.1</version>
+    <description>компонент для миграции с компонента Virtuemart (cms Joomla)  на cms PrestaShop</description>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.sql</file>
+        </sql>
+    </install>
+
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
+        </sql>
+    </uninstall>
+
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <scriptfile>script.php</scriptfile>
+    
+        <administration>
+        <menu link="option=com_migratorvmps">Мигратор VMPS</menu>
+
+        <submenu>
+            <menu view="vmproducts">главная</menu>            
+        </submenu>
+        <files folder="admin">          
+            <folder>controllers</folder>
+            <folder>helpers</folder>
+            <folder>language</folder>           
+            <folder>models</folder>
+            <folder>sql</folder>            
+            <folder>views</folder>            
+            <folder>.vscode</folder> 
+            <folder>prestashop_module</folder>                                  
+           
+            <filename>migratorvmps.php</filename>
+            <filename>config.xml</filename>
+            <filename>controller.php</filename>
+            <filename>index.html</filename>
+        </files>
+        <languages folder="admin">
+			<language tag="en-EN">language/en-EN/en-EN.com_migratorvmps.ini</language>
+            <language tag="en-EN">language/en-EN/en-EN.com_migratorvmps.sys.ini</language>
+            <language tag="ru-RU">language/ru-RU/ru-RU.com_migratorvmps.ini</language>
+            <language tag="ru-RU">language/ru-RU/ru-RU.com_migratorvmps.sys.ini</language>
+        </languages>
+
+    </administration>
+</extension>

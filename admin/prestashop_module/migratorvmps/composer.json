@@ -1,0 +1,15 @@
+{
+    "name": "prestashop/migratorvmps",
+    "description": "...",
+    "autoload": {
+      "psr-4": {
+        "Migratorvmps\\Controller\\": "src/Controller/",
+        "Migratorvmps\\Repository\\": "src/Repository/"        
+      }
+    },
+    "config": {
+        "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+  }
+  
