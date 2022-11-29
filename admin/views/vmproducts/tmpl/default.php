@@ -10,10 +10,11 @@ use Joomla\CMS\Language\Text;
         <table class="table table-striped table-hover" >
             <thead>
                 <tr>
-                    <th width="10%">#</th>
-                    <th width="35%">Наименование товара</th>
-                    <th width="35%"><?php echo Text::_("Короткое описание") ?></th>
-                    <th width="20%"><?php echo Text::_("Ссылка") ?></th>                                                     
+                    <th width="5%">#</th>
+                    <th width="30%"><?php echo Text::_('COM_MIGRATORVMPS_PRODUCT_NAME')?></th>
+                    <th width="20%"><?php echo Text::_('COM_MIGRATORVMPS_CATEGORY')?></th>
+                    <th width="30%"><?php echo Text::_('COM_MIGRATORVMPS_SHORT_DESCRIPTION') ?></th>
+                    <th width="15%"><?php echo Text::_('COM_MIGRATORVMPS_LINK') ?></th>                                                     
                 </tr>
             </thead>
             <tfoot>
