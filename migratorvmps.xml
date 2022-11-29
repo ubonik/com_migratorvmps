@@ -38,12 +38,10 @@
             <folder>language</folder>           
             <folder>models</folder>
             <folder>sql</folder>            
-            <folder>views</folder>            
-            <folder>.vscode</folder> 
+            <folder>views</folder>           
             <folder>prestashop_module</folder>                                  
            
-            <filename>migratorvmps.php</filename>
-            <filename>config.xml</filename>
+            <filename>migratorvmps.php</filename>            
             <filename>controller.php</filename>
             <filename>index.html</filename>
         </files>
