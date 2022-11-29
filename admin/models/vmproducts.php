@@ -19,9 +19,17 @@ class MigratorvmpsModelVmproducts extends ListModel
     {
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-
-        $query->select('name, description, description_short, link_rewrite')
-            ->from('m_product_lang')
+        
+        $query
+            ->select('
+                pl.name as name, 
+                cl.name as category, 
+                pl.description as description, 
+                pl.description_short as description_short, 
+                pl.link_rewrite as link_rewrite')
+            ->from('m_category_product as cp')
+            ->join('LEFT','m_product_lang AS pl ON pl.id_product=cp.id_product')
+            ->join('LEFT','m_category_lang AS cl ON cp.id_category=cl.id_category')
         ;
 
         return $query;

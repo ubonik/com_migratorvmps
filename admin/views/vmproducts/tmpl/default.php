@@ -3,6 +3,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+
 ?>
 <form action="<?php echo Route::_("index.php?option=com_migratorvmps&view=vmproducts") ?>"
       method="POST" name="adminForm" id="adminForm">     
@@ -30,7 +31,8 @@ use Joomla\CMS\Language\Text;
                     <?php foreach ($this->items as $key=>$item): ?>
                         <tr>
                             <td><?php echo $i; ?></td>
-                            <td><?=$item->name; ?></td>                            
+                            <td><?=$item->name; ?></td> 
+                            <td><?=$item->category; ?></td>                           
                             <td><?=$item->description_short; ?></td>
                             <td><?=$item->link_rewrite;  ?></td>
                                                        
