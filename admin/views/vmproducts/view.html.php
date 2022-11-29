@@ -21,6 +21,7 @@ class MigratorvmpsViewVmproducts extends HtmlView
     public function display($tpl = null)
     {
         $this->items = $this->get('items');
+        $this->pagination = $this->get('pagination');
         $this->addToolbar();
 
         return parent::display($tpl);

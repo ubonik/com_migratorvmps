@@ -16,6 +16,13 @@ use Joomla\CMS\Language\Text;
                     <th width="20%"><?php echo Text::_("Ссылка") ?></th>                                                     
                 </tr>
             </thead>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <?php echo $this->pagination->getListFooter(); ?>
+                </td>
+            </tr>
+            </tfoot>
             <tbody>
                 <?php if(!empty($this->items)): ?>
                     <?php $i= 1; ?>
