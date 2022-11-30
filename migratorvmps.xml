@@ -4,7 +4,7 @@
     <authorUrl>https://spod96.ru</authorUrl>
     <authorEmail>liders05@mail.ru</authorEmail>
     <version>1.0.1</version>
-    <description>компонент для миграции с компонента Virtuemart (cms Joomla)  на cms PrestaShop</description>
+    <description>COM_MIGRATORVMPS_DESCRIPTION</description>
 
     <install>
         <sql>

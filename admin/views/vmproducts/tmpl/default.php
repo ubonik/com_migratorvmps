@@ -8,6 +8,7 @@ use Joomla\CMS\Language\Text;
 <form action="<?php echo Route::_("index.php?option=com_migratorvmps&view=vmproducts") ?>"
       method="POST" name="adminForm" id="adminForm">     
     <div id="j-main-container" class="span10">
+        <?php var_dump($this->total); ?>
         <table class="table table-striped table-hover" >
             <thead>
                 <tr>
