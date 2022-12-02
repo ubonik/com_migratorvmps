@@ -59,7 +59,8 @@ class MigratorvmpsModelVmproducts extends ListModel
         $db->setQuery("INSERT INTO `m_product_map` (`id_product_old`)
             SELECT 
                 `virtuemart_product_id` AS `id_product_old`                
-            FROM `#__virtuemart_products_ru_ru`                               
+            FROM `#__virtuemart_products`
+            WHERE `published` = 1                               
             ORDER BY `virtuemart_product_id` 
         ;")->execute();
 
