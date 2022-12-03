@@ -34,17 +34,7 @@ class MigratorvmpsModelVmproducts extends ListModel
             ->join('LEFT', 'm_category_lang AS cl ON cp.id_category = cl.id_category')
             ->join('LEFT', 'm_product AS p ON cp.id_product = p.id_product')
         ;
-        /*
-            $query
-                ->select('
-                    pl.id_product,
-                    pl.name,
-                    pl.description_short,
-                    pl.link_rewrite')
-                ->from('m_product_lang as pl')*/
-        // ->join('LEFT','m_product_lang AS pl ON pl.id_product=cp.id_product')
-        // ->join('LEFT','m_category_lang AS cl ON cp.id_category=cl.id_category')
-        ;
+       
         return $query;
     }
 
@@ -52,8 +42,7 @@ class MigratorvmpsModelVmproducts extends ListModel
     {
         $items = $this->getItems();
         $application = Factory::getApplication();
-        // var_dump($items);
-        // exit;
+       
         if ($items) {
             $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_DATA_HAS_ALREADY_BEEN_COPIED'), 'notice');
             return true;
