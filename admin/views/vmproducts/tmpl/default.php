@@ -1,21 +1,22 @@
 <?php
 defined('_JEXEC') or die;
+
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-
 ?>
 <form action="<?php echo Route::_("index.php?option=com_migratorvmps&view=vmproducts") ?>"
       method="POST" name="adminForm" id="adminForm">     
-    <div id="j-main-container" class="span10">
-        <?php var_dump($this->total); ?>
+    <div id="j-main-container" class="span10">        
         <table class="table table-striped table-hover" >
             <thead>
                 <tr>
-                    <th width="5%">#</th>
-                    <th width="30%"><?php echo Text::_('COM_MIGRATORVMPS_PRODUCT_NAME')?></th>
+                    <th width="2%">#</th>
+                    <th width="20%"><?php echo Text::_('COM_MIGRATORVMPS_PRODUCT_NAME')?></th>
                     <th width="20%"><?php echo Text::_('COM_MIGRATORVMPS_CATEGORY')?></th>
-                    <th width="30%"><?php echo Text::_('COM_MIGRATORVMPS_SHORT_DESCRIPTION') ?></th>
+                    <th width="20%"><?php echo Text::_('COM_MIGRATORVMPS_DESCRIPTION') ?></th>
+                    <th width="20%"><?php echo Text::_('COM_MIGRATORVMPS_SHORT_DESCRIPTION') ?></th>
+                    <th width="15%"><?php echo Text::_('COM_MIGRATORVMPS_LINK') ?></th> 
                     <th width="15%"><?php echo Text::_('COM_MIGRATORVMPS_LINK') ?></th>                                                     
                 </tr>
             </thead>
@@ -33,10 +34,11 @@ use Joomla\CMS\Language\Text;
                         <tr>
                             <td><?php echo $i; ?></td>
                             <td><?=$item->name; ?></td> 
-                            <td><?=$item->category; ?></td>                           
+                            <td><?=$item->category; ?></td>
+                            <td><?=$item->description; ?></td>                           
                             <td><?=$item->description_short; ?></td>
                             <td><?=$item->link_rewrite;  ?></td>
-                                                       
+                            <td><?=$item->price; ?></td>                           
                         </tr>
                         <?php $i++; ?>
                     <?php endforeach; ?>

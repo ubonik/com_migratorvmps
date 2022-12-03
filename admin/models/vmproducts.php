@@ -19,19 +19,32 @@ class MigratorvmpsModelVmproducts extends ListModel
     {
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        
+
         $query
             ->select('
-                pl.name as name, 
-                cl.name as category, 
-                pl.description as description, 
-                pl.description_short as description_short, 
-                pl.link_rewrite as link_rewrite')
+                  pl.name as name,
+                  cp.id_product,
+                  cl.name as category,
+                  pl.description as description,
+                  pl.description_short as description_short,
+                  pl.link_rewrite as link_rewrite,
+                  p.price')
             ->from('m_category_product as cp')
-            ->join('LEFT','m_product_lang AS pl ON pl.id_product=cp.id_product')
-            ->join('LEFT','m_category_lang AS cl ON cp.id_category=cl.id_category')       
+            ->join('LEFT', 'm_product_lang AS pl ON cp.id_product = pl.id_product')
+            ->join('LEFT', 'm_category_lang AS cl ON cp.id_category = cl.id_category')
+            ->join('LEFT', 'm_product AS p ON cp.id_product = p.id_product')
         ;
-
+        /*
+            $query
+                ->select('
+                    pl.id_product,
+                    pl.name,
+                    pl.description_short,
+                    pl.link_rewrite')
+                ->from('m_product_lang as pl')*/
+        // ->join('LEFT','m_product_lang AS pl ON pl.id_product=cp.id_product')
+        // ->join('LEFT','m_category_lang AS cl ON cp.id_category=cl.id_category')
+        ;
         return $query;
     }
 
@@ -39,7 +52,8 @@ class MigratorvmpsModelVmproducts extends ListModel
     {
         $items = $this->getItems();
         $application = Factory::getApplication();
-       
+        // var_dump($items);
+        // exit;
         if ($items) {
             $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_DATA_HAS_ALREADY_BEEN_COPIED'), 'notice');
             return true;
@@ -59,8 +73,7 @@ class MigratorvmpsModelVmproducts extends ListModel
         $db->setQuery("INSERT INTO `m_product_map` (`id_product_old`)
             SELECT 
                 `virtuemart_product_id` AS `id_product_old`                
-            FROM `#__virtuemart_products`
-            WHERE `published` = 1                               
+            FROM `#__virtuemart_products`                                         
             ORDER BY `virtuemart_product_id` 
         ;")->execute();
 
@@ -196,7 +209,7 @@ class MigratorvmpsModelVmproducts extends ListModel
             ON `m`.`id_product_old` = `pm`.`virtuemart_product_id`                  
         ;")->execute();
 
-        $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_DATA_HAS_BEEN_COPIED_SUCCESSFULY'), 'Message');    
+        $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_DATA_HAS_BEEN_COPIED_SUCCESSFULY'), 'Message');
     }
 
     public function resetData()
@@ -209,6 +222,10 @@ class MigratorvmpsModelVmproducts extends ListModel
 
         $query = $db->getQuery(true);
         $db->setQuery("ALTER TABLE `m_product_map` AUTO_INCREMENT = 1")->execute();
+
+        $query = $db->getQuery(true);
+        $query->delete('m_category_map');
+        $db->setQuery($query)->execute();
 
         $query = $db->getQuery(true);
         $query->delete('m_category');
@@ -262,7 +279,7 @@ class MigratorvmpsModelVmproducts extends ListModel
 
         MigratorvmpsHelper::deleteDir($path_images);
         $application = Factory::getApplication();
-        
+
         $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_DATA_WAS_SUCCESSFULY_DELETED'), 'Message');
     }
 
@@ -292,8 +309,8 @@ class MigratorvmpsModelVmproducts extends ListModel
                 copy($image, JPATH_COMPONENT_ADMINISTRATOR . '/prestashop_module/migratorvmps/images/' .$path. '/' . $item->id_product . '.jpg');
             }
         }
-    
-        $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_IMAGES_HAS_BEEN_COPIED_SUCCESSFULY'), 'Message'); 
+
+        $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_IMAGES_HAS_BEEN_COPIED_SUCCESSFULY'), 'Message');
     }
 
     public function createQueryList()
@@ -414,8 +431,8 @@ class MigratorvmpsModelVmproducts extends ListModel
                     if ($value === '') {
                         $value = "''";
                     }
-                } else {
-                    // $value = preg_replace('/\<br(\s*)?\/?\>/i', "\n", $value);
+                } else {                   
+                    $value = html_entity_decode($value);
                     $pattern  =  '/\r\n|\r|\n/u';
                     $value = preg_replace($pattern, ' ', $value);
                     $value = "'" . addslashes($value) . "'";
@@ -427,5 +444,32 @@ class MigratorvmpsModelVmproducts extends ListModel
         $str = "(" . implode("), (", $data_array) . ");";
 
         return $str;
+    }
+
+    public function getItems()
+    {
+        $items = parent::getItems();
+        if ($items) {
+            $arr = [];
+            $p_id = null;
+
+            for ($i = 0; $i< count($items); $i++) {
+                $description = $items[$i]->description;                
+                if (!empty($description)) {
+                    $description =  mb_substr($description, 0, 100) . '...';
+                }
+
+                if ($items[$i]->id_product === $p_id) {
+                    end($arr)->category .= ' || ' .$items[$i]->category;
+                } else {
+                    $arr[] = $items[$i];
+                    $p_id = $items[$i]->id_product;
+                }
+            }
+
+            return $arr;
+        }
+
+        return false;
     }
 }
