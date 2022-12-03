@@ -445,7 +445,8 @@ class MigratorvmpsModelVmproducts extends ListModel
             for ($i = 0; $i< count($items); $i++) {
                 $description = $items[$i]->description;                
                 if (!empty($description)) {
-                    $description =  mb_substr($description, 0, 100) . '...';
+                    $description =  mb_substr($description, 0, 100, 'UTF-8') . '...';
+                    $items[$i]->description = $description;
                 }
 
                 if ($items[$i]->id_product === $p_id) {
