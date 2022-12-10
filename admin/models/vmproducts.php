@@ -443,13 +443,13 @@ class MigratorvmpsModelVmproducts extends ListModel
             $p_id = null;
 
             for ($i = 0; $i< count($items); $i++) {
-                $description = $items[$i]->description;                
+            /*    $description = $items[$i]->description;                
                 if (!empty($description)) {
                     $description =  mb_substr($description, 0, 100, 'UTF-8') . '...';
                     $items[$i]->description = $description;
-                }
-
-                if ($items[$i]->id_product === $p_id) {
+                }  */
+                     
+                if ($items[$i]->id_product == $p_id) {
                     end($arr)->category .= ' || ' .$items[$i]->category;
                 } else {
                     $arr[] = $items[$i];
