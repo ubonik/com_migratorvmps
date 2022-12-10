@@ -56,6 +56,7 @@ class Migratorvmps extends Module
     {
 		    return (parent::uninstall()
                 && Configuration::deleteByName('MIGRATORVMPS_TABLES_FILLED')
+                && $this->uninstallTab()
         );
     }
 
@@ -64,6 +65,18 @@ class Migratorvmps extends Module
         Tools::redirectAdmin(
             SymfonyContainer::getInstance()->get('router')->generate('main')
         );
+    }
+
+    private function uninstallTab()
+    {
+        $tabId = (int) Tab::getIdFromClassName('MigratorvmpsMainController');
+        if (!$tabId) {
+            return true;
+        }
+
+        $tab = new Tab($tabId);
+
+        return $tab->delete();
     }
 /*
 
