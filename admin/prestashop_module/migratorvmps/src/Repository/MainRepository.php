@@ -28,116 +28,10 @@ class MainRepository extends EntityRepository
             $sql = $this->splitSql($file);
        
 			foreach($sql as $query) 
-			{           
-			   // Db::getInstance()->execute($query);	
-				
+			{  			
 				$query = $this->connection->prepare($query);
 				$query->execute();           
 			}
-
-/*
-            $sql_product_lang = "INSERT INTO `ps_product_lang` ( 
-                `id_product`,            
-                `id_shop`, 
-                `id_lang`, 
-                `description`, 
-                `description_short`, 
-                `link_rewrite`, 
-                `name`
-                )
-            SELECT 
-                `id_product`,                        
-                `id_shop`, 
-                `id_lang`, 
-                `description`, 
-                `description_short`, 
-                `link_rewrite`, 
-                `name`                        
-            FROM `migratorps`;        
-            ";
-            
-                $query = $this->connection->prepare($sql_product_lang);
-                $query->execute();
-            
-                
-            $sql_product =  "INSERT INTO `ps_product` ( 
-                `id_product`,            
-                `id_shop_default`,
-                `id_tax_rules_group`,
-                `date_add`,
-                `date_upd`
-                )
-            SELECT 
-                `id_product`,                        
-                `id_shop`,
-                `id_tax_rules_group`,
-                `date_add`,
-                `date_upd`                                
-            FROM `migratorps`;        
-            ";
-            
-            $query = $this->connection->prepare($sql_product);
-            $query->execute(); 
-            
-            $sql_product_shop =  "INSERT INTO `ps_product_shop` ( 
-                `id_product`,            
-                `id_shop`,
-                `id_tax_rules_group`,
-                `date_add`,
-                `date_upd`
-                )
-            SELECT 
-                `id_product`,                        
-                `id_shop`,
-                `id_tax_rules_group`,
-                `date_add`,
-                `date_upd`                                
-            FROM `migratorps`;        
-            ";
-                
-            $query = $this->connection->prepare($sql_product_shop);
-            $query->execute(); 
-            
-            $sql_image_shop =  "INSERT INTO `ps_image_shop` ( 
-                `id_product`,
-                `id_image`,            
-                `id_shop`
-                )
-            SELECT 
-                `id_product`, 
-                `id_product`,                      
-                `id_shop`                                
-            FROM `migratorps`;        
-            ";
-                
-            $query = $this->connection->prepare($sql_image_shop);
-            $query->execute();
-
-            $sql_image =  "INSERT INTO `ps_image` (
-                `id_image`, 
-                `id_product`    
-            )
-            SELECT 
-                `id_product`, 
-                `id_product`                                            
-            FROM `migratorps`;        
-            ";
-                
-            $query = $this->connection->prepare($sql_image);
-            $query->execute();
-
-            $sql_image_lang =  "INSERT INTO `ps_image_lang` (
-                `id_image`, 
-                `id_lang`    
-            )
-            SELECT 
-                `id_product`, 
-                `id_lang`                                            
-            FROM `migratorps`;        
-            ";
-                
-            $query = $this->connection->prepare($sql_image_lang);
-            $query->execute(); */
 
             Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 1);           
         }                    
@@ -226,4 +120,92 @@ class MainRepository extends EntityRepository
         return "Таблицы не заполнены";
     }
 
+    public function splitSql($sql)
+    {
+        $start = 0;
+        $open = false;
+        $comment = false;
+        $endString = '';
+        $end = strlen($sql);
+        $queries = array();
+        $query = '';
+
+        for ($i = 0; $i < $end; $i++) {
+            $current = substr($sql, $i, 1);
+            $current2 = substr($sql, $i, 2);
+            $current3 = substr($sql, $i, 3);
+            $lenEndString = strlen($endString);
+            $testEnd = substr($sql, $i, $lenEndString);
+
+            if ($current == '"' || $current == "'" || $current2 == '--'
+                || ($current2 == '/*' && $current3 != '/*!' && $current3 != '/*+')
+                || ($current == '#' && $current3 != '#__')
+                || ($comment && $testEnd == $endString)) {
+                // Check if quoted with previous backslash
+                $n = 2;
+
+                while (substr($sql, $i - $n + 1, 1) == '\\' && $n < $i) {
+                    $n++;
+                }
+
+                // Not quoted
+                if ($n % 2 == 0) {
+                    if ($open) {
+                        if ($testEnd == $endString) {
+                            if ($comment) {
+                                $comment = false;
+                                if ($lenEndString > 1) {
+                                    $i += ($lenEndString - 1);
+                                    $current = substr($sql, $i, 1);
+                                }
+                                $start = $i + 1;
+                            }
+                            $open = false;
+                            $endString = '';
+                        }
+                    } else {
+                        $open = true;
+                        if ($current2 == '--') {
+                            $endString = "\n";
+                            $comment = true;
+                        } elseif ($current2 == '/*') {
+                            $endString = '*/';
+                            $comment = true;
+                        } elseif ($current == '#') {
+                            $endString = "\n";
+                            $comment = true;
+                        } else {
+                            $endString = $current;
+                        }
+                        if ($comment && $start < $i) {
+                            $query = $query . substr($sql, $start, ($i - $start));
+                        }
+                    }
+                }
+            }
+
+            if ($comment) {
+                $start = $i + 1;
+            }
+
+            if (($current == ';' && !$open) || $i == $end - 1) {
+                if ($start <= $i) {
+                    $query = $query . substr($sql, $start, ($i - $start + 1));
+                }
+                $query = trim($query);
+
+                if ($query) {
+                    if (($i == $end - 1) && ($current != ';')) {
+                        $query = $query . ';';
+                    }
+                    $queries[] = $query;
+                }
+
+                $query = '';
+                $start = $i + 1;
+            }
+        }
+
+        return $queries;
+    }
 }
