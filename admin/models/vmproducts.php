@@ -34,7 +34,7 @@ class MigratorvmpsModelVmproducts extends ListModel
             ->join('LEFT', 'm_category_lang AS cl ON cp.id_category = cl.id_category')
             ->join('LEFT', 'm_product AS p ON cp.id_product = p.id_product')
         ;
-       
+
         return $query;
     }
 
@@ -42,7 +42,7 @@ class MigratorvmpsModelVmproducts extends ListModel
     {
         $items = $this->getItems();
         $application = Factory::getApplication();
-       
+
         if ($items) {
             $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_DATA_HAS_ALREADY_BEEN_COPIED'), 'notice');
             return true;
@@ -265,14 +265,16 @@ class MigratorvmpsModelVmproducts extends ListModel
         $query = $db->getQuery(true);
 
         $path_images = JPATH_COMPONENT_ADMINISTRATOR . '/prestashop_module/migratorvmps/images';
-
         MigratorvmpsHelper::deleteDir($path_images);
-        $application = Factory::getApplication();
 
+        $path_images_categories = JPATH_COMPONENT_ADMINISTRATOR . '/prestashop_module/migratorvmps/images_categories';        
+        array_map('unlink', glob($path_images_categories.'/*'));
+
+        $application = Factory::getApplication();
         $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_DATA_WAS_SUCCESSFULY_DELETED'), 'Message');
     }
 
-    public function copyImages()
+    public function copyImagesProducts()
     {
         $application = Factory::getApplication();
         $db = $this->getDbo();
@@ -296,6 +298,35 @@ class MigratorvmpsModelVmproducts extends ListModel
 
             if (is_file($image)) {
                 copy($image, JPATH_COMPONENT_ADMINISTRATOR . '/prestashop_module/migratorvmps/images/' .$path. '/' . $item->id_product . '.jpg');
+            }
+        }
+
+        $application->enqueueMessage(Text::_('COM_MIGRATORVMPS_IMAGES_HAS_BEEN_COPIED_SUCCESSFULY'), 'Message');
+    }
+
+    public function copyImagesCategories()
+    {
+        $application = Factory::getApplication();
+        $db = $this->getDbo();
+
+        $db->setQuery("
+            SELECT 
+                `cm`.`id_category` AS `id_category`,
+                `vm`.`file_url` AS `url`
+            FROM `#__virtuemart_category_medias` AS `vcm`
+            LEFT JOIN `m_category_map` AS `cm`
+            ON  `vcm`.`virtuemart_category_id`=`cm`.`id_category_old`
+            LEFT JOIN `#__virtuemart_medias` AS `vm`
+            ON  `vcm`.`virtuemart_media_id`=`vm`.`virtuemart_media_id`
+            WHERE `cm`.`id_category` > 0; 
+        ")->execute();
+        $results = $db->loadObjectList();
+
+        foreach ($results as $item) {
+            $image = JPATH_SITE . '/' . $item->url;
+
+            if (is_file($image)) {
+                copy($image, JPATH_COMPONENT_ADMINISTRATOR . '/prestashop_module/migratorvmps/images_categories/' . $item->id_category . '.jpg');
             }
         }
 
@@ -420,7 +451,7 @@ class MigratorvmpsModelVmproducts extends ListModel
                     if ($value === '') {
                         $value = "''";
                     }
-                } else {                   
+                } else {
                     $value = html_entity_decode($value);
                     $pattern  =  '/\r\n|\r|\n/u';
                     $value = preg_replace($pattern, ' ', $value);
@@ -443,12 +474,12 @@ class MigratorvmpsModelVmproducts extends ListModel
             $p_id = null;
 
             for ($i = 0; $i< count($items); $i++) {
-            /*    $description = $items[$i]->description;                
-                if (!empty($description)) {
-                    $description =  mb_substr($description, 0, 100, 'UTF-8') . '...';
-                    $items[$i]->description = $description;
-                }  */
-                     
+                /*    $description = $items[$i]->description;
+                    if (!empty($description)) {
+                        $description =  mb_substr($description, 0, 100, 'UTF-8') . '...';
+                        $items[$i]->description = $description;
+                    }  */
+
                 if ($items[$i]->id_product == $p_id) {
                     end($arr)->category .= ' || ' .$items[$i]->category;
                 } else {

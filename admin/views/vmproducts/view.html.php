@@ -37,7 +37,8 @@ class MigratorvmpsViewVmproducts extends HtmlView
     {
         ToolbarHelper::title(Text::_('COM_MIGRATORVMPS'));
         ToolbarHelper::custom('vmproducts.copyProducts', '', '', 'COM_MIGRATORVMPS_COPY_PRODUCTS_WITH_CATEGORIES', false);
-        ToolbarHelper::custom('vmproducts.copyImages', '', '', 'COM_MIGRATORVMPS_COPY_IMAGES', false);
+        ToolbarHelper::custom('vmproducts.copyImagesProducts', '', '', 'COM_MIGRATORVMPS_COPY_IMAGES_PRODUCTS', false);
+        ToolbarHelper::custom('vmproducts.copyImagesCategories', '', '', 'COM_MIGRATORVMPS_COPY_IMAGES_CATEGORIES', false);
         ToolbarHelper::custom('vmproducts.createQueryList', '', '', 'COM_MIGRATORVMPS_PREPARING_PRESTASHOP_MODULE', false);        
         ToolbarHelper::custom('vmproducts.archiveProducts', '', '', 'COM_MIGRATORVMPS_DOWNLOAD_PRESTASHOP_MODULE', false);
         ToolbarHelper::custom('vmproducts.resetData', '', '', 'COM_MIGRATORVMPS_RESET', false);
