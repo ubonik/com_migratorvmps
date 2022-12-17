@@ -1,21 +1,13 @@
 {% extends '@PrestaShop/Admin/layout.html.twig' %}
 
 {% block content %}
-
-  <!--<button type="button" class="btn btn btn-success">Заполнить</button>-->
+  
   <p><span class="label label-success">{{message}}</span></p>
   <p> 
-  <a href="{{ path('insert')}}">заполнить таблицы</a>
+      <a href="{{ path('insert')}}">заполнить таблицы</a>
   </p>
   <p>
-  <a href="{{ path('reset')}}">сбросить таблицы</a>
-  </p>
-  <p>
-  <a href="{{ path('update_image')}}">обновить изображения</a>
-  </p>
+      <a href="{{ path('reset')}}">сбросить таблицы</a>
+  </p> 
 
 {% endblock %}
-
-
-
-
