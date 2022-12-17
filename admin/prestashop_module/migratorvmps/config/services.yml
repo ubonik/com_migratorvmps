@@ -5,12 +5,5 @@ services:
   prestashop.module.migratorvmps.mainrepository:
     class: Migratorvmps\Repository\MainRepository   
     arguments:
-      $connection: '@doctrine.dbal.default_connection'
-
-  prestashop.module.migratorvmps.updateimagerepository:
-    class: Migratorvmps\Repository\UpdateImageRepository   
-    arguments:
-      $connection: '@doctrine.dbal.default_connection'    
-      
-      
+      $connection: '@doctrine.dbal.default_connection'     
   
