@@ -20,3 +20,10 @@ reset:
     _controller: 'Migratorvmps\Controller\MainController::resetAction'  
     _legacy_controller: 'MigratorvmpsMainController'  
     _legacy_link: 'MigratorvmpsMainController'      
+insert_image:  
+  path: /migratorvmps/insert_image  
+  methods: [GET]  
+  defaults:  
+    _controller: 'Migratorvmps\Controller\InsertImageController::insertImageAction'  
+    _legacy_controller: 'MigratorvmpsInsertImageController'  
+    _legacy_link: 'MigratorvmpsInsertImageController'
