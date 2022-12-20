@@ -17,18 +17,16 @@ class MainController extends FrameworkBundleAdminController
 
     public function insertAction()
     {        
-        $repository = $this->get('prestashop.module.migratorvmps.mainrepository');
-        $repository->insertTables();
-        $message = $repository->getTablesFilledMessage();
+        $repository = $this->get('prestashop.module.migratorvmps.mainrepository');        
+        $message = $repository->insertTables();
         
         return $this->render('@Modules/migratorvmps/views/templates/admin/demo.html.twig', ['message' => $message]);
     }
 
     public function resetAction()
     {
-        $repository = $this->get('prestashop.module.migratorvmps.mainrepository');
-        $repository->resetTables();
-        $message = $repository->getTablesFilledMessage();
+        $repository = $this->get('prestashop.module.migratorvmps.mainrepository');        
+        $message = $repository->resetTables();
         
         return $this->render('@Modules/migratorvmps/views/templates/admin/demo.html.twig', ['message' => $message]);
     }

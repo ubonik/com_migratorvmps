@@ -21,20 +21,24 @@ class MainRepository extends EntityRepository
 
     public function insertTables()
     {   
-        $this->tables_filled = $this->getTablesFilled();      
+        $this->tables_filled = $this->getTablesFilled();
         
-        if (!$this->tables_filled) {
-            $file = file_get_contents(_PS_MODULE_DIR_ . "/migratorvmps/sql/dump.sql");
-            $sql = $this->splitSql($file);
-       
-			foreach($sql as $query) 
-			{  			
-				$query = $this->connection->prepare($query);
-				$query->execute();           
-			}
+        if ($this->tables_filled) {
+            return "Данные уже заполнены";
+        }        
+        
+        $file = file_get_contents(_PS_MODULE_DIR_ . "/migratorvmps/sql/dump.sql");
+        $sql = $this->splitSql($file);
+    
+        foreach($sql as $query) 
+        {  			
+            $query = $this->connection->prepare($query);
+            $query->execute();           
+        }
 
-            Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 1);           
-        }                    
+        Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 1);
+        
+        return "Данные успешно заполнены";                         
     }
 
     public function resetTables()
@@ -102,19 +106,21 @@ class MainRepository extends EntityRepository
         $query = $this->connection->prepare($sql_category_group);
         $query->execute();
 
-        Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 0);              
+        Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 0); 
+        
+        return "Данные не заполнены";
     }
 
     public function getTablesFilled()
     {
         return Configuration::get('MIGRATORVMPS_TABLES_FILLED');
     }
-
+    
     public function getTablesFilledMessage()
     {
         $tables_filled = $this->getTablesFilled();
         if ($tables_filled) {
-            return "Таблицы уже заполнены";
+            return "Таблицы заполнены";
         }
 
         return "Таблицы не заполнены";

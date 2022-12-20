@@ -22,15 +22,20 @@ class InsertImageRepository extends EntityRepository
         $s = _PS_MODULE_DIR_ . "migratorvmps/images_categories/";
         $d = _PS_CAT_IMG_DIR_;
 
+               
         $dir = \opendir($s);
         while (($file = \readdir($dir)) !== false) {
             $a = $s.$file;
             $b = $d.$file;
-           if (is_file($a)) \copy($a, $b);
+            if (is_file($a)) {
+                \copy($a, $b);
+            }
         }
         \closedir($dir);
 
         $this->lowering(_PS_MODULE_DIR_ . 'migratorvmps/images', _PS_IMG_DIR_ . 'p');
+        
+        return "изображения заполнены";
     }
 
     private function lowering($dirname, $dirdestination)
