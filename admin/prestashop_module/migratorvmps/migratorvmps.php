@@ -24,13 +24,13 @@ class Migratorvmps extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->l('migratorvmps');
-        $this->description = $this->l('Description of my module');
-        $this->confirmUninstall = $this->l('Delete?');
+        $this->displayName = $this->trans('migratorvmps', [], 'Modules.Migratorvmps.Migratorvmps');
+        $this->description = $this->trans('Description of my module', [], 'Modules.Migratorvmps.Migratorvmps');
+        $this->confirmUninstall = $this->trans('Delete?', [], 'Modules.Migratorvmps.Migratorvmps');
 
         $tabNames = [];
         foreach (Language::getLanguages(true) as $lang) {
-            $tabNames[$lang['locale']] = $this->trans('MIGRATORVMPS', array(), 'Modules.Migratorvmps.Admin', $lang['locale']);
+            $tabNames[$lang['locale']] = $this->trans('Migrator VMPS', array(), 'Modules.Migratorvmps.Admin', $lang['locale']);
         }
         $this->tabs = [
             [
@@ -39,7 +39,7 @@ class Migratorvmps extends Module
                 'visible' => true,
                 'name' => $tabNames,
                 'parent_class_name' => 'DEFAULT',
-                'wording' => 'MIGRATORVMPS',
+                'wording' => 'Migrator VMPS',
                 'wording_domain' => 'Modules.Migratorvmps.Admin'
             ],
         ];
@@ -78,4 +78,9 @@ class Migratorvmps extends Module
 
         return $tab->delete();
     }
+
+    public function isUsingNewTranslationSystem()
+    {
+        return true;
+    }    
 }

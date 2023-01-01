@@ -1,11 +1,18 @@
 services:
   _defaults:
-    public: true  
+    public: true 
+
+  migratorvmps.module:
+    class: Migratorvmps
+    factory: ['Module', 'getInstanceByName']
+    arguments:
+      - 'migratorvmps'   
 
   prestashop.module.migratorvmps.mainrepository:
     class: Migratorvmps\Repository\MainRepository   
     arguments:
       $connection: '@doctrine.dbal.default_connection'
+      $module: '@migratorvmps.module'                   
            
   prestashop.module.migratorvmps.insertimagerepository:
     class: Migratorvmps\Repository\InsertImageRepository   

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="admin105crq1pq" source-language="ru-RU" target-language="ru-RU" datatype="plaintext">
+    <body>
+      <trans-unit id="fefdc113d2856d5e1b3a2f313f31e0dc">
+        <source>The data is already filled in</source>
+        <target>Данные уже заполнены</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="ac7db872b8b219522d4b8bbaebb9dd26">
+        <source>The data has been filled in successfully</source>
+        <target>Данные успешно заполнены.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="3c2ba48f97cd7e9f883ed9eb2d480822">
+        <source>The data is not filled in</source>
+        <target>Данные не заполнены</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="f5eaabe616ab213f0ab523a9b487bccb">
+        <source>The data is filled in</source>
+        <target>Данные заполнены.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="2122675b6ef7f75e27053e5b8641e7de">
+        <source>Migrator VMPS</source>
+        <target>мигратор vmps</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="e913a6eafbefd57572904d003b451a5e">
+        <source>Fill in the data</source>
+        <target>Заполнить данные</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="b8fafd4d55f19ac7d8e0df60849def54">
+        <source>Reset Data</source>
+        <target>Сбросить данные</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="399c176d8ed6717a68f52cec0663e88a">
+        <source>Fill in images</source>
+        <target>Заполнить изображения</target>
+        <note>Line: </note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

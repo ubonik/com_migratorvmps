@@ -5,125 +5,135 @@ namespace Migratorvmps\Repository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 use Configuration;
+use Migratorvmps;
 
 class MainRepository extends EntityRepository
 {
+    /**
+     * @var Migratorvmps
+     */
+    public $module;
+    /**
+     *  @var bool 
+     * */
     private $tables_filled;
     /**
      * @var Connection
      */
     private $connection;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, Migratorvmps $module)
     {
-        $this->connection = $connection;        
+        $this->connection = $connection;
+        $this->module = $module;
     }
 
     public function insertTables()
-    {   
+    {        
         $this->tables_filled = $this->getTablesFilled();
-        
-        if ($this->tables_filled) {
-            return "Данные уже заполнены";
-        }        
-        
+
+        if ($this->tables_filled) {            
+            return $this->module->getTranslator()->trans('The data is already filled in', [], 'Modules.Migratorvmps.Admin');
+        }
+
         $file = file_get_contents(_PS_MODULE_DIR_ . "/migratorvmps/sql/dump.sql");
         $sql = $this->splitSql($file);
-    
-        foreach($sql as $query) 
-        {  			
+
+        foreach ($sql as $query) {
             $query = $this->connection->prepare($query);
-            $query->execute();           
+            $query->execute();
         }
 
         Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 1);
-        
-        return "Данные успешно заполнены";                         
+
+        return $this->module->getTranslator()->trans('The data has been filled in successfully', [], 'Modules.Migratorvmps.Admin');
     }
 
     public function resetTables()
-    {        
-        $sql_product_lang =  "TRUNCATE `ps_product_lang`;";            
-        $query = $this->connection->prepare($sql_product_lang);        
+    {
+        $sql_product_lang =  "TRUNCATE `ps_product_lang`;";
+        $query = $this->connection->prepare($sql_product_lang);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_product_lang` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_product =  "TRUNCATE `ps_product`;";            
+        $sql_product =  "TRUNCATE `ps_product`;";
         $query = $this->connection->prepare($sql_product);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_product` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_product_shop =  "TRUNCATE `ps_product_shop`;";            
+        $sql_product_shop =  "TRUNCATE `ps_product_shop`;";
         $query = $this->connection->prepare($sql_product_shop);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_product_shop` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_image_shop =  "TRUNCATE `ps_image_shop`;";            
+        $sql_image_shop =  "TRUNCATE `ps_image_shop`;";
         $query = $this->connection->prepare($sql_image_shop);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_image_shop` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_image =  "TRUNCATE `ps_image`;";            
+        $sql_image =  "TRUNCATE `ps_image`;";
         $query = $this->connection->prepare($sql_image);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_image` AUTO_INCREMENT = 1;");
         $query->execute();
-        
-        $sql_image_lang =  "TRUNCATE `ps_image_lang`;";            
+
+        $sql_image_lang =  "TRUNCATE `ps_image_lang`;";
         $query = $this->connection->prepare($sql_image_lang);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_image_lang` AUTO_INCREMENT = 1;");
         $query->execute();
-        
-        $sql_product_lang =  "TRUNCATE `ps_category_lang`;";            
-        $query = $this->connection->prepare($sql_product_lang);        
+
+        $sql_product_lang =  "TRUNCATE `ps_category_lang`;";
+        $query = $this->connection->prepare($sql_product_lang);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_category_lang` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_category =  "TRUNCATE `ps_category`;";            
+        $sql_category =  "TRUNCATE `ps_category`;";
         $query = $this->connection->prepare($sql_category);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_category` AUTO_INCREMENT = 1;");
         $query->execute();
-        
-        $sql_category_product =  "TRUNCATE `ps_category_product`;";            
+
+        $sql_category_product =  "TRUNCATE `ps_category_product`;";
         $query = $this->connection->prepare($sql_category_product);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_category` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_category_shop =  "TRUNCATE `ps_category_shop`;";            
+        $sql_category_shop =  "TRUNCATE `ps_category_shop`;";
         $query = $this->connection->prepare($sql_category_shop);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_category_shop` AUTO_INCREMENT = 1;");
         $query->execute();
-        $sql_category_group =  "TRUNCATE `ps_category_group`;";            
+        $sql_category_group =  "TRUNCATE `ps_category_group`;";
         $query = $this->connection->prepare($sql_category_group);
         $query->execute();
 
-        Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 0); 
-        
-        return "Данные не заполнены";
+        Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 0);
+
+        return $this->module->trans('The data is not filled in', [], 'Modules.Migratorvmps.Admin');
     }
 
     public function getTablesFilled()
     {
         return Configuration::get('MIGRATORVMPS_TABLES_FILLED');
     }
-    
+
     public function getTablesFilledMessage()
     {
         $tables_filled = $this->getTablesFilled();
+
         if ($tables_filled) {
-            return "Таблицы заполнены";
+            return $this->module->getTranslator()->trans('The data is filled in', [], 'Modules.Migratorvmps.Admin');
         }
 
-        return "Таблицы не заполнены";
+        return $this->module->getTranslator()
+            ->trans('The data is not filled in', [], 'Modules.Migratorvmps.Admin');
     }
 
     public function splitSql($sql)

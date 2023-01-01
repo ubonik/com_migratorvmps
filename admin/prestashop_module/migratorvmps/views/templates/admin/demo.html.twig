@@ -4,12 +4,12 @@
   
   <p><span class="label label-success">{{message}}</span></p>
   <p> 
-      <a href="{{ path('insert')}}">заполнить таблицы</a>
+      <a href="{{ path('insert')}}">{{'Fill in the data'|trans( {}, 'Modules.Migratorvmps.Admin') }}</a>
   </p>
   <p>
-      <a href="{{ path('reset')}}">сбросить таблицы</a>
+      <a href="{{ path('reset')}}">{{'Reset Data'|trans( {}, 'Modules.Migratorvmps.Admin') }}</a>
   </p> 
   <p>
-      <a href="{{ path('insert_image')}}">обновить изображения</a>
+      <a href="{{ path('insert_image')}}">{{'Fill in images'|trans( {}, 'Modules.Migratorvmps.Admin') }}</a>
   </p>
 {% endblock %}
