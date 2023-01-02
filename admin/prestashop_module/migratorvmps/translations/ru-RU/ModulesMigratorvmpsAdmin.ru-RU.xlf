@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="admin105crq1pq" source-language="ru-RU" target-language="ru-RU" datatype="plaintext">
     <body>
-      <trans-unit id="fefdc113d2856d5e1b3a2f313f31e0dc">
-        <source>The data is already filled in</source>
+      <trans-unit id="ef7723b60d17f377e71f2a37fd9a9180">
+        <source>The data is already filled</source>
         <target>Данные уже заполнены</target>
         <note>Line: </note>
       </trans-unit>
@@ -12,14 +12,19 @@
         <target>Данные успешно заполнены.</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="3c2ba48f97cd7e9f883ed9eb2d480822">
-        <source>The data is not filled in</source>
+      <trans-unit id="f30c0015d22f9134f954736ca726f2fa">
+        <source>The data is not filled</source>
         <target>Данные не заполнены</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="f5eaabe616ab213f0ab523a9b487bccb">
-        <source>The data is filled in</source>
+      <trans-unit id="5d30c768206106c4cb9f8786473d98fb">
+        <source>The data is filled</source>
         <target>Данные заполнены.</target>
+        <note>Line: </note>
+      </trans-unit>
+      <trans-unit id="5b3a34ae6d0d670e5475b268d47abea3">
+        <source>Images are filled</source>
+        <target>Изображения заполнены</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="2122675b6ef7f75e27053e5b8641e7de">

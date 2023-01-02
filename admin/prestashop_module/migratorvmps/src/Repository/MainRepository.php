@@ -12,9 +12,9 @@ class MainRepository extends EntityRepository
     /**
      * @var Migratorvmps
      */
-    public $module;
+    private $module;
     /**
-     *  @var bool 
+     *  @var bool
      * */
     private $tables_filled;
     /**
@@ -29,11 +29,11 @@ class MainRepository extends EntityRepository
     }
 
     public function insertTables()
-    {        
+    {
         $this->tables_filled = $this->getTablesFilled();
 
-        if ($this->tables_filled) {            
-            return $this->module->getTranslator()->trans('The data is already filled in', [], 'Modules.Migratorvmps.Admin');
+        if ($this->tables_filled) {
+            return $this->module->getTranslator()->trans('The data is already filled', [], 'Modules.Migratorvmps.Admin');
         }
 
         $file = file_get_contents(_PS_MODULE_DIR_ . "/migratorvmps/sql/dump.sql");
@@ -116,7 +116,7 @@ class MainRepository extends EntityRepository
 
         Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 0);
 
-        return $this->module->trans('The data is not filled in', [], 'Modules.Migratorvmps.Admin');
+        return $this->module->trans('The data is not filled', [], 'Modules.Migratorvmps.Admin');
     }
 
     public function getTablesFilled()
@@ -129,13 +129,21 @@ class MainRepository extends EntityRepository
         $tables_filled = $this->getTablesFilled();
 
         if ($tables_filled) {
-            return $this->module->getTranslator()->trans('The data is filled in', [], 'Modules.Migratorvmps.Admin');
+            return $this->module->getTranslator()->trans('The data is filled', [], 'Modules.Migratorvmps.Admin');
         }
 
         return $this->module->getTranslator()
-            ->trans('The data is not filled in', [], 'Modules.Migratorvmps.Admin');
+            ->trans('The data is not filled', [], 'Modules.Migratorvmps.Admin');
     }
 
+    /**
+     * Splits a string of multiple queries into an array of individual queries.
+     * Single line or line end comments and multi line comments are stripped off.
+     *
+     * @param   string  $sql  Input SQL string with which to split into individual queries.
+     *
+     * @return  array  The queries from the input string separated into an array.
+     */
     public function splitSql($sql)
     {
         $start = 0;
