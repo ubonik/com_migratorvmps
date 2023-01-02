@@ -7,9 +7,10 @@
         <target>мигратор vmps</target>
         <note>Line: </note>
       </trans-unit>
-      <trans-unit id="c562204be79e4b775708fbaf776dde27">
-        <source>Description of my module</source>
-        <target>описание</target>
+      <trans-unit id="90334fcb8692f87b7cf58c88317c1295">
+        <source>A module for transferring products and categories 
+            from the Virtuemart 3 component (Joomla 3) to Prestashop 1.7.8.</source>
+        <target>Модуль для переноса товаров и категорий из компонента Virtuemart 3 (Joomla 3) в Prestashop 1.7.8</target>
         <note>Line: </note>
       </trans-unit>
       <trans-unit id="786a3ffbf64dbd32b887357bfb981ab3">
