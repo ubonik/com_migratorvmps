@@ -1,0 +1,24 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+
+  <div class="container">
+  
+    <div class="alert alert-info alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      {{message}}
+    </div>
+     
+    <div class="row">
+      <div class="col-sm-10"> 
+        <a class="btn btn-secondary" href="{{ path('insert')}}">{{'Fill in the data'|trans( {}, 'Modules.Migratorvmps.Admin') }}</a>     
+        <a class="btn btn-secondary" href="{{ path('insert_image')}}">{{'Fill in images'|trans( {}, 'Modules.Migratorvmps.Admin') }}</a>
+      </div>
+      <div class="col-sm-2">
+        <a class="btn btn-warning" href="{{ path('reset')}}">{{'Reset Data'|trans( {}, 'Modules.Migratorvmps.Admin') }}</a>
+      </div>
+    </div>
+
+  <div>
+
+{% endblock %}

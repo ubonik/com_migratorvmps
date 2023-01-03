@@ -12,7 +12,7 @@ class MainController extends FrameworkBundleAdminController
         $repository = $this->get('prestashop.module.migratorvmps.mainrepository');
         $message = $repository->getTablesFilledMessage();        
        
-        return $this->render('@Modules/migratorvmps/views/templates/admin/demo.html.twig', ['message' => $message]);
+        return $this->render('@Modules/migratorvmps/views/templates/admin/main.html.twig', ['message' => $message]);
     }
 
     public function insertAction()
@@ -20,7 +20,7 @@ class MainController extends FrameworkBundleAdminController
         $repository = $this->get('prestashop.module.migratorvmps.mainrepository');        
         $message = $repository->insertTables();
         
-        return $this->render('@Modules/migratorvmps/views/templates/admin/demo.html.twig', ['message' => $message]);
+        return $this->render('@Modules/migratorvmps/views/templates/admin/main.html.twig', ['message' => $message]);
     }
 
     public function resetAction()
@@ -28,7 +28,7 @@ class MainController extends FrameworkBundleAdminController
         $repository = $this->get('prestashop.module.migratorvmps.mainrepository');        
         $message = $repository->resetTables();
         
-        return $this->render('@Modules/migratorvmps/views/templates/admin/demo.html.twig', ['message' => $message]);
+        return $this->render('@Modules/migratorvmps/views/templates/admin/main.html.twig', ['message' => $message]);
     }
 
 }

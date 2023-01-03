@@ -5,7 +5,6 @@ if (!defined('_PS_VERSION_')) {
 }
 
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
-use Language;
 
 class Migratorvmps extends Module
 {
@@ -25,7 +24,8 @@ class Migratorvmps extends Module
         parent::__construct();
 
         $this->displayName = $this->trans('migratorvmps', [], 'Modules.Migratorvmps.Migratorvmps');
-        $this->description = $this->trans('Description of my module', [], 'Modules.Migratorvmps.Migratorvmps');
+        $this->description = $this->trans('A module for transferring products and categories 
+            from the Virtuemart 3 component (Joomla 3) to Prestashop 1.7.8.', [], 'Modules.Migratorvmps.Migratorvmps');
         $this->confirmUninstall = $this->trans('Delete?', [], 'Modules.Migratorvmps.Migratorvmps');
 
         $tabNames = [];
