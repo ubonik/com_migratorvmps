@@ -11,12 +11,16 @@ class MainRepository extends EntityRepository
 {
     /**
      * @var Migratorvmps
-     */
+     */    
     private $module;
+
     /**
+     * The variable stores the value true if the tables are filled with new data, or false if not.
+     * 
      *  @var bool
      * */
     private $tables_filled;
+
     /**
      * @var Connection
      */
@@ -28,7 +32,12 @@ class MainRepository extends EntityRepository
         $this->module = $module;
     }
 
-    public function insertTables()
+    /**
+     *The method fills the tables of products and categories with data from the $file file.
+     *
+     * @return string
+     */
+    public function insertTables(): string
     {
         $this->tables_filled = $this->getTablesFilled();
 
@@ -49,7 +58,12 @@ class MainRepository extends EntityRepository
         return $this->module->getTranslator()->trans('The data has been filled in successfully', [], 'Modules.Migratorvmps.Admin');
     }
 
-    public function resetTables()
+    /**
+     * Method for resetting the filled data.
+     *
+     * @return string
+     */
+    public function resetTables(): string
     {
         $sql_product_lang =  "TRUNCATE `ps_product_lang`;";
         $query = $this->connection->prepare($sql_product_lang);
@@ -119,12 +133,22 @@ class MainRepository extends EntityRepository
         return $this->module->trans('The data is not filled', [], 'Modules.Migratorvmps.Admin');
     }
 
-    public function getTablesFilled()
+    /**
+     * The method gets the value of the MIGRATORVMPS_TABLES_FILLED variable.
+     *
+     * @return boolean
+     */
+    public function getTablesFilled(): bool
     {
         return Configuration::get('MIGRATORVMPS_TABLES_FILLED');
     }
 
-    public function getTablesFilledMessage()
+    /**
+     *The method generates a message based on the value of the MIGRATORVMPS_TABLES_FILLED variable.
+     *
+     * @return string
+     */
+    public function getTablesFilledMessage(): string
     {
         $tables_filled = $this->getTablesFilled();
 
@@ -144,7 +168,7 @@ class MainRepository extends EntityRepository
      *
      * @return  array  The queries from the input string separated into an array.
      */
-    public function splitSql($sql)
+    public function splitSql(string $sql): array
     {
         $start = 0;
         $open = false;

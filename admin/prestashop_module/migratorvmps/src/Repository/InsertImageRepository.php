@@ -23,7 +23,12 @@ class InsertImageRepository extends EntityRepository
         $this->module = $module;        
     }
 
-    public function insertImage()
+    /**
+     * The method of transferring images from the module to the cms Prestashop folders.
+     *
+     * @return string
+     */
+    public function insertImage(): string
     {
         $s = _PS_MODULE_DIR_ . "migratorvmps/images_categories/";
         $d = _PS_CAT_IMG_DIR_;
@@ -44,7 +49,15 @@ class InsertImageRepository extends EntityRepository
         return $this->module->getTranslator()->trans('Images are filled', [], 'Modules.Migratorvmps.Admin');    
     }
 
-    private function lowering($dirname, $dirdestination)
+    /**
+     * The method of transferring files and folders of product images from 
+     * the module to the /img/p cms Prestashop folder.
+     *
+     * @param string $dirname
+     * @param string $dirdestination
+     * @return void
+     */
+    private function lowering(string $dirname, string $dirdestination): void
     {
         $dir = opendir($dirname);
         while (($file = readdir($dir)) !== false) {
