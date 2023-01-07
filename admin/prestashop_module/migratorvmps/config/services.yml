@@ -18,3 +18,4 @@ services:
     class: Migratorvmps\Repository\InsertImageRepository   
     arguments:
       $connection: '@doctrine.dbal.default_connection'
+      $module: '@migratorvmps.module'
