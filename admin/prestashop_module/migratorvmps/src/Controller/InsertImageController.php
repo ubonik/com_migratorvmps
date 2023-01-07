@@ -12,7 +12,7 @@ class InsertImageController extends FrameworkBundleAdminController
         $repository = $this->get('prestashop.module.migratorvmps.insertimagerepository');
         $message = $repository->insertImage();        
          
-        return $this->render('@Modules/migratorvmps/views/templates/admin/image.html.twig', ['message'=>$message]);
+        return $this->render('@Modules/migratorvmps/views/templates/admin/main.html.twig', ['message'=>$message]);
     }
 
 }
