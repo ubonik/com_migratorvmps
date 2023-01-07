@@ -130,7 +130,7 @@ class MainRepository extends EntityRepository
 
         Configuration::updateValue('MIGRATORVMPS_TABLES_FILLED', 0);
 
-        return $this->module->trans('The data is not filled', [], 'Modules.Migratorvmps.Admin');
+        return $this->module->getTranslator()->trans('The data is not filled', [], 'Modules.Migratorvmps.Admin');
     }
 
     /**
