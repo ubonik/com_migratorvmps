@@ -16,8 +16,8 @@ class Migratorvmps extends Module
         $this->author = 'alex';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = [
-            'min' => '1.7.0',
-            'max' => '1.7.99',
+            'min' => '1.7.8',
+            'max' => '8.99',
         ];
         $this->bootstrap = true;
 
