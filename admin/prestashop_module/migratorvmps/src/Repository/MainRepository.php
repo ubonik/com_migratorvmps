@@ -11,12 +11,12 @@ class MainRepository extends EntityRepository
 {
     /**
      * @var Migratorvmps
-     */    
+     */
     private $module;
 
     /**
      * The variable stores the value true if the tables are filled with new data, or false if not.
-     * 
+     *
      *  @var bool
      * */
     private $tables_filled;
@@ -101,13 +101,15 @@ class MainRepository extends EntityRepository
         $query = $this->connection->prepare("ALTER TABLE  `ps_image_lang` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_product_lang =  "TRUNCATE `ps_category_lang`;";
-        $query = $this->connection->prepare($sql_product_lang);
+
+
+        $sql_category_lang =  "DELETE FROM `ps_category_lang` WHERE `id_category` > 2;";
+        $query = $this->connection->prepare($sql_category_lang);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_category_lang` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_category =  "TRUNCATE `ps_category`;";
+        $sql_category =  "DELETE FROM `ps_category` WHERE `id_category` > 2;";
         $query = $this->connection->prepare($sql_category);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_category` AUTO_INCREMENT = 1;");
@@ -119,12 +121,12 @@ class MainRepository extends EntityRepository
         $query = $this->connection->prepare("ALTER TABLE  `ps_category` AUTO_INCREMENT = 1;");
         $query->execute();
 
-        $sql_category_shop =  "TRUNCATE `ps_category_shop`;";
+        $sql_category_shop =  "DELETE FROM `ps_category_shop` WHERE `id_category` > 2;";
         $query = $this->connection->prepare($sql_category_shop);
         $query->execute();
         $query = $this->connection->prepare("ALTER TABLE  `ps_category_shop` AUTO_INCREMENT = 1;");
         $query->execute();
-        $sql_category_group =  "TRUNCATE `ps_category_group`;";
+        $sql_category_group =  "DELETE FROM `ps_category_group` WHERE `id_category` > 2;";
         $query = $this->connection->prepare($sql_category_group);
         $query->execute();
 
