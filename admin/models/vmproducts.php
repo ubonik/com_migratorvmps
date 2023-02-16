@@ -338,14 +338,14 @@ class MigratorvmpsModelVmproducts extends ListModel
         $application = Factory::getApplication();
         $db = $this->getDbo();
 
-        $str = "INSERT INTO `ps_product_lang` (`id_product`, `id_shop`, `id_lang`, `description`, `description_short`,
+        $str = "INSERT IGNORE INTO `ps_product_lang` (`id_product`, `id_shop`, `id_lang`, `description`, `description_short`,
             `link_rewrite`, `meta_description`, `meta_keywords`, `meta_title`, `name`, `available_now`, 
             `available_later`, `delivery_in_stock`, `delivery_out_stock`) VALUES ";
 
         $string_product_lang = $this->getStringFromQuery($db, 'm_product_lang');
         $str .= $string_product_lang;
 
-        $str .= " INSERT INTO `ps_product` (`id_product`, `id_supplier`, `id_manufacturer`, `id_category_default`, `id_shop_default`,
+        $str .= " INSERT IGNORE INTO `ps_product` (`id_product`, `id_supplier`, `id_manufacturer`, `id_category_default`, `id_shop_default`,
             `id_tax_rules_group`, `on_sale`, `online_only`, `ean13`, `isbn`, `upc`, `mpn`, `ecotax`,
             `quantity`, `minimal_quantity`, `low_stock_threshold`, `low_stock_alert`, `price`,
             `wholesale_price`, `unity`, `unit_price_ratio`, `additional_shipping_cost`, `reference`,
@@ -359,7 +359,7 @@ class MigratorvmpsModelVmproducts extends ListModel
         $string_product = $this->getStringFromQuery($db, 'm_product');
         $str .= $string_product;
 
-        $str .= " INSERT INTO `ps_product_shop` (
+        $str .= " INSERT IGNORE INTO `ps_product_shop` (
             `id_product`, `id_shop`, `id_category_default`, `id_tax_rules_group`, `on_sale`, `online_only`,
             `ecotax`, `minimal_quantity`, `low_stock_threshold`, `low_stock_alert`, `price`, `wholesale_price`,
             `unity`, `unit_price_ratio`, `additional_shipping_cost`, `customizable`,`uploadable_files`,
@@ -371,51 +371,49 @@ class MigratorvmpsModelVmproducts extends ListModel
         $string_product_shop = $this->getStringFromQuery($db, 'm_product_shop');
         $str .= $string_product_shop;
 
-        $str .= " INSERT INTO `ps_image_shop` (`id_product`, `id_image`, `id_shop`, `cover`) VALUES ";
+        $str .= " INSERT IGNORE INTO `ps_image_shop` (`id_product`, `id_image`, `id_shop`, `cover`) VALUES ";
 
         $string_image_shop = $this->getStringFromQuery($db, 'm_image_shop');
         $str .= $string_image_shop;
 
-        $str .= " INSERT INTO `ps_image` (`id_image`, `id_product`, `position`, `cover`) VALUES ";
+        $str .= " INSERT IGNORE INTO `ps_image` (`id_image`, `id_product`, `position`, `cover`) VALUES ";
 
         $string_image =  $this->getStringFromQuery($db, 'm_image');
         $str .= $string_image;
 
-        $str .= " INSERT INTO `ps_image_lang` (`id_image`, `id_lang`, `legend`) VALUES ";
+        $str .= " INSERT IGNORE INTO `ps_image_lang` (`id_image`, `id_lang`, `legend`) VALUES ";
 
         $string_image_lang = $this->getStringFromQuery($db, 'm_image_lang');
         $str .= $string_image_lang;
 
-        $str .= "REPLACE INTO `ps_category` (`id_category`, `id_parent`, `id_shop_default`,
+        $str .= "INSERT IGNORE INTO `ps_category` (`id_category`, `id_parent`, `id_shop_default`,
             `level_depth`, `nleft`, `nright`, `active`, `date_add`, `date_upd`, `position`,
-            `is_root_category`) VALUES ('1', '0', '1','0','0','0','1','2022-11-14 21:15:24','2022-11-14 21:15:24','0','0'),
-            ('2', '1', '1','1','0','0','1','2022-11-14 21:15:24','2022-11-14 21:15:24','0','1'), ";
+            `is_root_category`) VALUES ";
 
         $string_category = $this->getStringFromQuery($db, 'm_category');
         $str .= $string_category;
 
-        $str .= " REPLACE INTO `ps_category_lang` (`id_category`, `id_shop`, `id_lang`,
+        $str .= " INSERT IGNORE INTO `ps_category_lang` (`id_category`, `id_shop`, `id_lang`,
             `name`, `description`, `link_rewrite`, `meta_title`, `meta_keywords`, 
-            `meta_description`) VALUES ('1', '1', '1','Корневая','','kornevaya','','',''),
-            ('2', '1', '1','Главная','','glavnaya','','',''), ";
+            `meta_description`) VALUES ";
 
         $string_category_lang = $this->getStringFromQuery($db, 'm_category_lang');
         $str .= $string_category_lang;
 
-        $str .= " REPLACE INTO `ps_category_product` (`id_category`, `id_product`,
+        $str .= " INSERT IGNORE INTO `ps_category_product` (`id_category`, `id_product`,
             `position`) VALUES ";
 
         $string_category_product = $this->getStringFromQuery($db, 'm_category_product');
         $str .= $string_category_product;
 
-        $str .= " REPLACE INTO `ps_category_shop` (`id_category`, `id_shop`,
-            `position`) VALUES ('1', '1', '0'), ('2', '1', '0'),";
+        $str .= " INSERT IGNORE INTO `ps_category_shop` (`id_category`, `id_shop`,
+            `position`) VALUES ";
 
         $string_category_shop = $this->getStringFromQuery($db, 'm_category_shop');
         $str .= $string_category_shop;
 
-        $str .= " REPLACE INTO `ps_category_group` (`id_category`, `id_group`) 
-            VALUES ('2', '1'), ('2', '2'), ('2', '3'),";
+        $str .= " INSERT IGNORE INTO `ps_category_group` (`id_category`, `id_group`) 
+            VALUES ";
 
         $string_category_group = $this->getStringFromQuery($db, 'm_category_group');
         $str .= $string_category_group;
